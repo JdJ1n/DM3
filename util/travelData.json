@@ -1,0 +1,28 @@
+{
+  "seats" : [ {
+    "col" : "A",
+    "row" : 1
+  }, {
+    "col" : "C",
+    "row" : 12
+  }, {
+    "capacity" : 4
+  }, {
+    "col" : "B",
+    "row" : 5,
+    "carriage" : 5
+  } ],
+  "hubs" : [ {
+    "code" : "YUL",
+    "city" : null
+  }, {
+    "code" : "YYZ",
+    "city" : null
+  }, {
+    "code" : "MIA",
+    "city" : null
+  }, {
+    "code" : "NYC",
+    "city" : null
+  } ]
+}
