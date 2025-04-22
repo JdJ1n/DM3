@@ -3,6 +3,7 @@ import java.time.LocalDateTime;
 import com.travel.model.vehicle.*;
 import com.travel.model.company.*;
 import com.travel.model.hub.*;
+import com.travel.visitor.*;
 
 // Journey.java
 
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 import java.time.Duration;
 import java.util.List;
 
-public abstract class Journey {
+public abstract class Journey implements Visitable{
     private final String id;
     private final LocalDateTime departureDateTime;
     private final LocalDateTime arrivalDateTime;
@@ -59,6 +60,22 @@ public abstract class Journey {
 
     public Hub getArrival() {
         return hubs.get(hubs.size()-1);
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Journey{" +
+                "arrivalDateTime=" + arrivalDateTime +
+                ", departureDateTime=" + departureDateTime +
+                ", hubs=" + hubs +
+                ", id='" + id + '\'' +
+                ", vehicle=" + vehicle +
+                '}';
     }
 }
 

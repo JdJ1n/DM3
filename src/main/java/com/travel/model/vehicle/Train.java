@@ -28,4 +28,13 @@ public class Train extends Vehicle{
     public void setSections(ArrayList<TrainSection> sections) {
         this.sections = sections;
     }
+
+    @Override
+    public String toString() {
+        return "Train{" +
+                "id='" + id + '\'' +
+                ", sections=" + sections +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

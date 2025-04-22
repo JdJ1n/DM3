@@ -29,4 +29,13 @@ public class Cruise extends Vehicle{
     public void setSections(ArrayList<CruiseSection> sections) {
         this.sections = sections;
     }
+
+    @Override
+    public String toString() {
+        return "Cruise{" +
+                "id='" + id + '\'' +
+                ", sections=" + sections +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

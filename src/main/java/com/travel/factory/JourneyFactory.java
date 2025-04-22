@@ -30,27 +30,27 @@ public class JourneyFactory {
     }
     
 
-    public CruiseJourney createCruiseJourney(String id,
-                                                 List<Journey> subJourneys,
-                                                 Vehicle vehicle) {
-        return new CruiseJourney(id, subJourneys, vehicle);
-    }
-
-    public CruiseJourney createCruiseJourney(String id,
-                                                 Vehicle vehicle,
-                                                 Journey... subJourneys) {
-        return new CruiseJourney(id, Arrays.asList(subJourneys), vehicle);
-    }
-
-    public TrainJourney createTrainJourney(String id,
-                                             List<Journey> subJourneys,
-                                             Vehicle vehicle) {
-        return new TrainJourney(id, subJourneys, vehicle);
-    }
-
-    public TrainJourney createTrainJourney(String id,
-                                             Vehicle vehicle,
-                                             Journey... subJourneys) {
-        return new TrainJourney(id, Arrays.asList(subJourneys), vehicle);
-    }
+//    public CruiseJourney createCruiseJourney(String id,
+//                                                 List<Journey> subJourneys,
+//                                                 Vehicle vehicle) {
+//        return new CruiseJourney(id, subJourneys, vehicle);
+//    }
+//
+//    public CruiseJourney createCruiseJourney(String id,
+//                                                 Vehicle vehicle,
+//                                                 Journey... subJourneys) {
+//        return new CruiseJourney(id, Arrays.asList(subJourneys), vehicle);
+//    }
+//
+//    public TrainJourney createTrainJourney(String id,
+//                                             List<Journey> subJourneys,
+//                                             Vehicle vehicle) {
+//        return new TrainJourney(id, subJourneys, vehicle);
+//    }
+//
+//    public TrainJourney createTrainJourney(String id,
+//                                             Vehicle vehicle,
+//                                             Journey... subJourneys) {
+//        return new TrainJourney(id, Arrays.asList(subJourneys), vehicle);
+//    }
 }

@@ -67,4 +67,13 @@ public abstract class Section {
     public abstract boolean lock(String id);
 
     public abstract boolean unlock(String id);
+
+    @Override
+    public String toString() {
+        return "Section{" +
+                "capacity=" + capacity +
+                ", classe=" + classe +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

@@ -1,8 +1,0 @@
-[ {
-  "seatType" : "flightSeat",
-  "col" : "C",
-  "row" : 12
-}, {
-  "seatType" : "cruiseCabin",
-  "capacity" : 4
-} ]

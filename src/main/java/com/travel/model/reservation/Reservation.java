@@ -4,10 +4,11 @@ package com.travel.model.reservation;
 import com.travel.model.journey.Journey;
 import com.travel.model.reservation.state.InitialState;
 import com.travel.model.reservation.state.ReservationState;
+import com.travel.visitor.*;
 
 import java.time.LocalDateTime;
 
-public abstract class Reservation {
+public abstract class Reservation implements Visitable{
     private final String referenceNumber;
     private final Journey journey;
     private final LocalDateTime creationDate;
@@ -22,26 +23,21 @@ public abstract class Reservation {
         this.journey = journey;
         this.creationDate = creationDate;
         this.expirationDate = expirationDate;
-        // 初始状态：尚未预订
         this.state = new InitialState();
     }
 
-    /** 发起预订 */
     public void book() {
         state.book(this);
     }
 
-    /** 支付预订 */
     public void pay() {
         state.pay(this);
     }
 
-    /** 取消预订（或过期） */
     public void cancel() {
         state.cancel(this);
     }
 
-    /** 返回当前状态名称 */
     public String getStatus() {
         return state.name();
     }
@@ -62,8 +58,23 @@ public abstract class Reservation {
         return expirationDate;
     }
 
-    /** 状态类通过此方法切换上下文的状态 */
     public void setState(ReservationState newState) {
         this.state = newState;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "creationDate=" + creationDate +
+                ", expirationDate=" + expirationDate +
+                ", journey=" + journey +
+                ", referenceNumber='" + referenceNumber + '\'' +
+                ", state=" + state +
+                '}';
     }
 }

@@ -1,8 +1,11 @@
 package com.travel.model.passenger;
 
+import com.travel.visitor.Visitable;
+import com.travel.visitor.Visitor;
+
 import java.time.LocalDate;
 
-public class Passenger {
+public class Passenger implements Visitable {
     protected String email;
     protected String firstName;
     protected String lastName;
@@ -110,5 +113,10 @@ public class Passenger {
                 ", dateOfBirth=" + dateOfBirth +
                 ", passportExpDate=" + passportExpDate +
                 '}';
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

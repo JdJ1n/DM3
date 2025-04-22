@@ -26,4 +26,12 @@ public abstract class Vehicle {
     public void setType(String type) {
         this.type = type;
     }
+
+    @Override
+    public String toString() {
+        return "Vehicle{" +
+                "company=" + company +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

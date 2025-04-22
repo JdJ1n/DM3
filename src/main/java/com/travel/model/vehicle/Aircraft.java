@@ -76,4 +76,12 @@ public class Aircraft extends Vehicle{
         this.sections = sections;
     }
 
+    @Override
+    public String toString() {
+        return "Aircraft{" +
+                "id=" + id +
+                ", sections=" + sections +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

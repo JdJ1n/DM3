@@ -22,7 +22,7 @@ public class Airline extends Company {
         if (code == null || code.trim().isEmpty()) {
             throw new IllegalArgumentException("Airline ID cannot be null or empty.");
         }
-        if (code.length() != 6) {
+        if (code.length() != 2) {
             throw new IllegalArgumentException("Airline ID must be 2 digit.");
         }
         if (usedCodes.contains(code)) {

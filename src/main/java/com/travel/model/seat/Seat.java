@@ -41,7 +41,7 @@ public abstract class Seat {
         return true;
     }
 
-    void setState(SeatState state) {
+    public void setState(SeatState state) {
         this.state = state;
     }
 

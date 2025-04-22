@@ -48,4 +48,13 @@ public class Classe {
     public void setRate(double rate) {
         this.rate = rate;
     }
+
+    @Override
+    public String toString() {
+        return "Classe{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rate=" + rate +
+                '}';
+    }
 }
