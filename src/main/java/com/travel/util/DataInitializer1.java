@@ -27,7 +27,7 @@ public final class DataInitializer1 {
         model.addSeat(new FlightSeat('A', 1));           // 头等舱 1A
         model.addSeat(new FlightSeat('C', 12));          // 经济舱 12C
 
-        CruiseCabin cabin = new CruiseCabin(4);          // 4‑berth cabin
+        CruiseCabin cabin = new CruiseCabin(4,1);          // 4‑berth cabin
         cabin.book(); cabin.pay();
         model.addSeat(cabin);
 

@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonTypeName("cruiseCabin")
 public class CruiseCabin extends GroupSeat {
     private int capacity;
-
+    private int id;
     public CruiseCabin() {}
 
-    public CruiseCabin(int capacity) {
+    public CruiseCabin(int capacity,int id) {
         if (capacity < 2 || capacity > 6) throw new IllegalArgumentException("Invalid capacity");
         this.capacity = capacity;
     }
@@ -21,4 +21,11 @@ public class CruiseCabin extends GroupSeat {
         this.capacity = capacity;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

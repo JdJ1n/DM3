@@ -3,6 +3,7 @@ package com.travel.model.seat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.travel.model.seat.state.*;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.PROPERTY,
@@ -15,20 +16,49 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 public abstract class Seat {
     protected SeatState state = new AvailableState();
 
-    public void book() {
+    public boolean book() {
         state.book(this);
+        return true;
     }
 
-    public void pay() {
+    public boolean pay() {
         state.pay(this);
+        return true;
     }
 
-    public void cancel() {
+    public boolean cancel() {
         state.cancel(this);
+        return true;
+    }
+
+    public boolean lock() {
+        state.lock(this);
+        return true;
+    }
+
+    public boolean unlock() {
+        state.unlock(this);
+        return true;
     }
 
     void setState(SeatState state) {
         this.state = state;
+    }
+
+    public boolean isAvailable() {
+        return getState() instanceof AvailableState;
+    }
+
+    public boolean isUnavailable() {
+        return getState() instanceof UnavailableState;
+    }
+
+    public boolean isReserved() {
+        return getState() instanceof ReservedState;
+    }
+
+    public boolean isConfirmed() {
+        return getState() instanceof ConfirmedState;
     }
 
     @JsonIgnore

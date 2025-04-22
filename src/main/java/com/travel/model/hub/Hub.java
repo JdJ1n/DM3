@@ -1,6 +1,7 @@
 package com.travel.model.hub;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -67,5 +68,17 @@ public abstract class Hub {
                 "city='" + city + '\'' +
                 ", code='" + code + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Hub hub)) return false;
+        return Objects.equals(code, hub.code);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(code);
     }
 }

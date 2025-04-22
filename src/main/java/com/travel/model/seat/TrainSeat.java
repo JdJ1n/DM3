@@ -42,5 +42,7 @@ public class TrainSeat extends IndividualSeat {
         this.row = row;
     }
 
-    // Getters and setters
+    public String getId() {
+        return carriage+String.valueOf(col) + row;
+    }
 }

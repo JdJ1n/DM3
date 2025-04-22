@@ -32,5 +32,8 @@ public class FlightSeat extends IndividualSeat {
         this.row = row;
     }
 
-    // Getters and setters
+    public String getId() {
+        return String.valueOf(col) + row;
+    }
+
 }
