@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.travel.model.hub.Hub;
 import com.travel.model.vehicle.Vehicle;
+import com.travel.visitor.Visitor;
 
 public class CruiseJourney extends MultipleJourney {
 
@@ -21,5 +22,8 @@ public class CruiseJourney extends MultipleJourney {
                 hubs);
     }
 
-    // TODO
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
 }

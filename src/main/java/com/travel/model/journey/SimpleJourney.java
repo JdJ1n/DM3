@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.travel.model.vehicle.Vehicle;
 import com.travel.model.hub.Hub;
+import com.travel.visitor.Visitor;
 
 public abstract class SimpleJourney extends Journey {
 
@@ -22,4 +23,6 @@ public abstract class SimpleJourney extends Journey {
                 vehicle,
                 Arrays.asList(departureHub, arrivalHub));
     }
+
+    public abstract void accept(Visitor visitor);
 }

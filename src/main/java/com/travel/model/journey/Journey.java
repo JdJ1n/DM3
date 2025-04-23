@@ -63,9 +63,7 @@ public abstract class Journey implements Visitable{
     }
 
     @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
-    }
+    public abstract void accept(Visitor visitor);
 
     @Override
     public String toString() {

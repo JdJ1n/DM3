@@ -9,8 +9,9 @@ import java.util.List;
 
 import com.travel.model.vehicle.Vehicle;
 import com.travel.model.hub.Hub;
+import com.travel.visitor.Visitor;
 
-public class MultipleJourney extends Journey {
+public abstract class MultipleJourney extends Journey {
 
     public MultipleJourney(String id,
                          LocalDateTime departureDateTime,
@@ -23,4 +24,6 @@ public class MultipleJourney extends Journey {
                 vehicle,
                 hubs);
     }
+
+    public abstract void accept(Visitor visitor);
 }

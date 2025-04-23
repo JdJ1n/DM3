@@ -6,6 +6,7 @@ import com.travel.model.hub.Hub;
 import com.travel.model.journey.CruiseJourney;
 import com.travel.model.journey.FlightJourney;
 import com.travel.model.journey.TrainJourney;
+import com.travel.model.vehicle.Aircraft;
 import com.travel.model.vehicle.Vehicle;
 
 import java.time.LocalDateTime;
@@ -25,7 +26,7 @@ public class JourneyFactory {
     public FlightJourney createFlightJourney(String id,
                                              LocalDateTime departure,
                                              LocalDateTime arrival,
-                                             Vehicle vehicle,
+                                             Aircraft vehicle,
                                              Airport departureAirport,
                                              Airport arrivalAirport) {
         return new FlightJourney(id, departure, arrival, vehicle, departureAirport, arrivalAirport);

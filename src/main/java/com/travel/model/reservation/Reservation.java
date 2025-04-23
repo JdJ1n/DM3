@@ -66,15 +66,4 @@ public abstract class Reservation implements Visitable{
     public void accept(Visitor visitor) {
         visitor.visit(this);
     }
-
-    @Override
-    public String toString() {
-        return "Reservation{" +
-                "creationDate=" + creationDate +
-                ", expirationDate=" + expirationDate +
-                ", journey=" + journey +
-                ", referenceNumber='" + referenceNumber + '\'' +
-                ", state=" + state +
-                '}';
-    }
 }

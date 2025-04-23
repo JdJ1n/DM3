@@ -6,6 +6,7 @@ import com.travel.factory.JourneyFactory;
 import com.travel.model.hub.Hub;
 import com.travel.model.hub.Airport;
 import com.travel.model.journey.Journey;
+import com.travel.model.vehicle.Aircraft;
 import com.travel.model.vehicle.Vehicle;
 import com.travel.observer.SystemModel;
 
@@ -69,6 +70,7 @@ public class AdminView extends JFrame implements com.travel.observer.Observer {
             Hub arr = hubs.stream().filter(h->h.toString().equals(arrName)).findFirst().orElse(null);
             if (dep == null || arr == null) return;
 
+            // select vehicle
             List<Vehicle> vehicles = SystemModel.getInstance().getVehicles();
             String[] vehNames = vehicles.stream().map(Object::toString).toArray(String[]::new);
             String vehName = (String) JOptionPane.showInputDialog(
@@ -78,6 +80,7 @@ public class AdminView extends JFrame implements com.travel.observer.Observer {
             Vehicle veh = vehicles.stream().filter(v->v.toString().equals(vehName)).findFirst().orElse(null);
             if (veh == null) return;
 
+            // for simplicity, use now and now+2h
             LocalDateTime depTime = LocalDateTime.now();
             LocalDateTime arrTime = depTime.plusHours(2);
 
@@ -85,7 +88,7 @@ public class AdminView extends JFrame implements com.travel.observer.Observer {
             switch (type) {
                 case "Flight":
                     j = JourneyFactory.getInstance()
-                            .createFlightJourney(id, depTime, arrTime, veh,
+                            .createFlightJourney(id, depTime, arrTime, (Aircraft) veh,
                                     (Airport)dep, (Airport)arr);
                     break;
                 case "Train":
