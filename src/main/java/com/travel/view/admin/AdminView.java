@@ -1,70 +1,119 @@
 // src/main/java/com/travel/view/admin/AdminView.java
 package com.travel.view.admin;
 
-import com.travel.observer.Observer;
-import com.travel.observer.Subject;
-import com.travel.observer.SystemModel;
+import com.travel.controller.MainController;
+import com.travel.factory.JourneyFactory;
+import com.travel.model.hub.Hub;
+import com.travel.model.hub.Airport;
 import com.travel.model.journey.Journey;
+import com.travel.model.vehicle.Vehicle;
+import com.travel.observer.SystemModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
-public class AdminView extends JFrame implements Observer {
-    private final DefaultListModel<Journey> journeyListModel = new DefaultListModel<>();
-    private final JList<Journey> journeyList = new JList<>(journeyListModel);
-    private final JButton addBtn    = new JButton("Add Journey");
-    private final JButton removeBtn = new JButton("Remove Journey");
-    private final JButton refreshBtn= new JButton("Refresh List");
+public class AdminView extends JFrame implements com.travel.observer.Observer {
+    private final MainController controller;
+    private final DefaultListModel<Journey> listModel = new DefaultListModel<>();
+    private final JList<Journey> journeyList = new JList<>(listModel);
 
-    public AdminView() {
+    public AdminView(MainController controller) {
         super("Admin Dashboard");
+        this.controller = controller;
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setSize(600, 400);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout(10, 10));
+        setLayout(new BorderLayout(10,10));
 
-        // 中心：Journey 列表
-        journeyList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JScrollPane scrollPane = new JScrollPane(journeyList);
-        add(scrollPane, BorderLayout.CENTER);
+        add(new JScrollPane(journeyList), BorderLayout.CENTER);
+        JPanel btnPanel = new JPanel();
+        JButton addBtn    = new JButton("Add Journey");
+        JButton removeBtn = new JButton("Remove Journey");
+        btnPanel.add(addBtn);
+        btnPanel.add(removeBtn);
+        add(btnPanel, BorderLayout.SOUTH);
 
-        // 南部：功能按钮
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(addBtn);
-        buttonPanel.add(removeBtn);
-        buttonPanel.add(refreshBtn);
-        add(buttonPanel, BorderLayout.SOUTH);
-
-        // 按钮逻辑（可进一步扩展）
-        refreshBtn.addActionListener(e -> refreshJourneys());
         removeBtn.addActionListener(e -> {
             Journey sel = journeyList.getSelectedValue();
             if (sel != null) {
-                // TODO: 调用 Controller 或 SystemModel 删除
-                // SystemModel.getInstance().removeJourney(sel);
-                journeyListModel.removeElement(sel);
+                controller.removeJourney(sel);
             }
         });
+
         addBtn.addActionListener(e -> {
-            // TODO: 弹出对话框，创建新 Journey，然后
-            // SystemModel.getInstance().addJourney(newJourney);
-            // journeyListModel.addElement(newJourney);
+            String[] types = {"Flight", "Train", "Cruise"};
+            String type = (String) JOptionPane.showInputDialog(
+                    this, "Select journey type:", "Type",
+                    JOptionPane.QUESTION_MESSAGE, null, types, types[0]
+            );
+            if (type == null) return;
+
+            String id = JOptionPane.showInputDialog(this, "Enter Journey ID:");
+            if (id == null || id.trim().isEmpty()) return;
+
+            // select hubs
+            List<Hub> hubs = SystemModel.getInstance().getHubs();
+            String[] hubNames = hubs.stream().map(Object::toString).toArray(String[]::new);
+            String depName = (String) JOptionPane.showInputDialog(
+                    this, "Select departure hub:", "Hub",
+                    JOptionPane.QUESTION_MESSAGE, null, hubNames, hubNames[0]
+            );
+            String arrName = (String) JOptionPane.showInputDialog(
+                    this, "Select arrival hub:", "Hub",
+                    JOptionPane.QUESTION_MESSAGE, null, hubNames, hubNames[0]
+            );
+            if (depName == null || arrName == null) return;
+            Hub dep = hubs.stream().filter(h->h.toString().equals(depName)).findFirst().orElse(null);
+            Hub arr = hubs.stream().filter(h->h.toString().equals(arrName)).findFirst().orElse(null);
+            if (dep == null || arr == null) return;
+
+            List<Vehicle> vehicles = SystemModel.getInstance().getVehicles();
+            String[] vehNames = vehicles.stream().map(Object::toString).toArray(String[]::new);
+            String vehName = (String) JOptionPane.showInputDialog(
+                    this, "Select vehicle:", "Vehicle",
+                    JOptionPane.QUESTION_MESSAGE, null, vehNames, vehNames[0]
+            );
+            Vehicle veh = vehicles.stream().filter(v->v.toString().equals(vehName)).findFirst().orElse(null);
+            if (veh == null) return;
+
+            LocalDateTime depTime = LocalDateTime.now();
+            LocalDateTime arrTime = depTime.plusHours(2);
+
+            Journey j;
+            switch (type) {
+                case "Flight":
+                    j = JourneyFactory.getInstance()
+                            .createFlightJourney(id, depTime, arrTime, veh,
+                                    (Airport)dep, (Airport)arr);
+                    break;
+                case "Train":
+                    j = JourneyFactory.getInstance()
+                            .createTrainJourney(id, depTime, arrTime, veh, dep, arr);
+                    break;
+                case "Cruise":
+                    j = JourneyFactory.getInstance()
+                            .createCruiseJourney(id, depTime, arrTime, veh, dep, arr);
+                    break;
+                default:
+                    return;
+            }
+            controller.addJourney(j);
         });
 
-        // 首次加载
-        refreshJourneys();
+        refreshList();
     }
 
-    private void refreshJourneys() {
-        journeyListModel.clear();
-        for (Journey j : SystemModel.getInstance().getJourneys()) {
-            journeyListModel.addElement(j);
+    private void refreshList() {
+        listModel.clear();
+        for (Journey j : controller.getAllJourneys()) {
+            listModel.addElement(j);
         }
     }
 
     @Override
-    public void update(Subject subject) {
-        // 系统模型变化时刷新列表
-        SwingUtilities.invokeLater(this::refreshJourneys);
+    public void update(com.travel.observer.Subject subject) {
+        SwingUtilities.invokeLater(this::refreshList);
     }
 }

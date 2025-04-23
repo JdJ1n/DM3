@@ -29,7 +29,6 @@ public class MainView extends JFrame {
         add(clientBtn);
     }
 
-    /** 启动主窗口 */
     public void showView() {
         setVisible(true);
     }
